@@ -164,9 +164,9 @@ if __name__ == '__main__':
 
         # end-effector
         xr_motion_data_ready = Value('b', False, lock=True)        # [input] whether XR hand/controller motion data has arrived
-        if args.ee in ("dex3", "inspire_ftp", "inspire_dfx") and args.input_mode == "controller":
-            raise ValueError(f"{args.ee} does not support controller input mode.")
-        elif args.ee == "dex3":
+        # if args.ee in ("dex3", "inspire_ftp", "inspire_dfx") and args.input_mode == "controller":
+        #     raise ValueError(f"{args.ee} does not support controller input mode.")
+        if args.ee == "dex3":
             from teleop.robot_control.robot_hand_unitree import Dex3_1_Controller
             left_hand_pos_array = Array('d', 75, lock = True)      # [input]
             right_hand_pos_array = Array('d', 75, lock = True)     # [input]
@@ -290,10 +290,10 @@ if __name__ == '__main__':
                     head_img = img_client.get_head_frame()
                 if xr_need_local_img and head_img.bgr is not None:
                     tv_wrapper.render_to_xr(head_img.bgr)
-            if camera_config['left_wrist_camera']['enable_zmq']:
+            if camera_config.get('left_wrist_camera', {}).get('enable_zmq'):
                 if args.record:
                     left_wrist_img = img_client.get_left_wrist_frame()
-            if camera_config['right_wrist_camera']['enable_zmq']:
+            if camera_config.get('right_wrist_camera', {}).get('enable_zmq'):
                 if args.record:
                     right_wrist_img = img_client.get_right_wrist_frame()
 
@@ -437,12 +437,12 @@ if __name__ == '__main__':
                             colors[f"color_{1}"] = head_img.bgr[:, camera_config['head_camera']['image_shape'][1]//2:]
                         else:
                             logger_mp.warning("Head image is None!")
-                        if camera_config['left_wrist_camera']['enable_zmq']:
+                        if camera_config.get('left_wrist_camera', {}).get('enable_zmq'):
                             if left_wrist_img is not None:
                                 colors[f"color_{2}"] = left_wrist_img.bgr
                             else:
                                 logger_mp.warning("Left wrist image is None!")
-                        if camera_config['right_wrist_camera']['enable_zmq']:
+                        if camera_config.get('right_wrist_camera', {}).get('enable_zmq'):
                             if right_wrist_img is not None:
                                 colors[f"color_{3}"] = right_wrist_img.bgr
                             else:
@@ -452,12 +452,12 @@ if __name__ == '__main__':
                             colors[f"color_{0}"] = head_img.bgr
                         else:
                             logger_mp.warning("Head image is None!")
-                        if camera_config['left_wrist_camera']['enable_zmq']:
+                        if camera_config.get('left_wrist_camera', {}).get('enable_zmq'):
                             if left_wrist_img is not None:
                                 colors[f"color_{1}"] = left_wrist_img.bgr
                             else:
                                 logger_mp.warning("Left wrist image is None!")
-                        if camera_config['right_wrist_camera']['enable_zmq']:
+                        if camera_config.get('right_wrist_camera', {}).get('enable_zmq'):
                             if right_wrist_img is not None:
                                 colors[f"color_{2}"] = right_wrist_img.bgr
                             else:
