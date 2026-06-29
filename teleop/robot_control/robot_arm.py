@@ -136,6 +136,9 @@ class G1_29_ArmController:
             self.msg.motor_cmd[id].q  = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
+        # Start q_target at the current arm position
+        self.q_target = self.get_current_dual_arm_q()
+
         # initialize publish thread
         self.publish_thread = threading.Thread(target=self._ctrl_motor_state)
         self.ctrl_lock = threading.Lock()
@@ -419,6 +422,9 @@ class G1_23_ArmController:
             self.msg.motor_cmd[id].q  = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
+        # Start q_target at the current arm position
+        self.q_target = self.get_current_dual_arm_q()
+
         # initialize publish thread
         self.publish_thread = threading.Thread(target=self._ctrl_motor_state)
         self.ctrl_lock = threading.Lock()
@@ -694,6 +700,9 @@ class H1_2_ArmController:
             self.msg.motor_cmd[id].q  = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
+        # Start q_target at the current arm position
+        self.q_target = self.get_current_dual_arm_q()
+
         # initialize publish thread
         self.publish_thread = threading.Thread(target=self._ctrl_motor_state)
         self.ctrl_lock = threading.Lock()
@@ -963,6 +972,9 @@ class H1_ArmController:
             self.msg.motor_cmd[id].q  = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
 
+        # Start q_target at the current arm position
+        self.q_target = self.get_current_dual_arm_q()
+
         # initialize publish thread
         self.publish_thread = threading.Thread(target=self._ctrl_motor_state)
         self.ctrl_lock = threading.Lock()
@@ -1195,6 +1207,9 @@ class H2_ArmController:
             )
             self.msg.motor_cmd[id].q = self.all_motor_q[id]
         logger_mp.info("Lock OK!")
+
+        # Start q_target at the current arm position
+        self.q_target = self.get_current_dual_arm_q()
 
         # initialize publish thread
         self.publish_thread = threading.Thread(target=self._ctrl_motor_state)
